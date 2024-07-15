@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Performance Tracker</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="dashboard">
+      <main>
+        <section class="top-section">
+          <div class="colloquiums">
+            <h2>Frontend</h2>
+          </div>
+          <div class="results">
+            <h2>Results</h2>
+            <div id="studentResults"></div>
+          </div>
+          <div class="file-upload">
+            <input type="file" id="csvFileInput" accept=".csv">
+            <button id="uploadButton">Upload CSV</button>
+        </div>
+        </section>
+        <section class="bottom-section">
+          <div class="left-panel">
+            <h2>Student List</h2>
+            <div id="studentList"></div>
+            <button id="rankStudents">Rank Students</button>
+            <div id="rankedStudents"></div>
+          </div>
+          <div class="right-panel">
+            <h2>Performance Charts</h2>
+            <div id="weekSelector">
+                <label for="weekNumber">Week:</label>
+                <select id="weekNumber"></select>
+                <button id="addWeek">Add Week</button>
+            </div>
+            <div id="weeklyChart" class="chart-container"></div>
+            <div id="studentTrendCharts"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
