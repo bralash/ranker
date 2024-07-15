@@ -6,7 +6,7 @@ document
   .getElementById("uploadButton")
   .addEventListener("click", handleFileUpload);
 
-function handleFileUpload() {
+const handleFileUpload = () => {
   const fileInput = document.getElementById("csvFileInput");
   const file = fileInput.files[0];
   if (file) {
@@ -21,11 +21,11 @@ function handleFileUpload() {
   }
 }
 
-function processCSV(csv) {
+const processCSV = csv => {
   const lines = csv.split("\n");
   const headers = lines[0].split(",");
 
-  // Clear existing data
+ 
   students = [];
   weeks = [];
 
@@ -37,17 +37,16 @@ function processCSV(csv) {
       const quizScore = parseInt(currentLine[2]);
       const labScore = parseInt(currentLine[3]);
 
-      // Add student if not exists
+      
       if (!students.some((s) => s.name === studentName)) {
         students.push({ name: studentName });
       }
 
-      // Add week if not exists
       while (weeks.length <= weekNumber) {
         weeks.push({ students: [] });
       }
 
-      // Update student data for the week
+   
       const weekIndex = weekNumber;
       const studentIndex = weeks[weekIndex].students.findIndex(
         (s) => s.name === studentName
@@ -68,10 +67,10 @@ function processCSV(csv) {
     }
   }
 
-  // Set current week to the latest week
+
   currentWeek = weeks.length - 1;
 
-  // Update UI
+
   updateWeekSelector();
   displayStudents();
   loadWeekData();
@@ -79,7 +78,7 @@ function processCSV(csv) {
   rankStudents();
 }
 
-// Load students from JSON file
+
 fetch("js/trainees.json")
   .then((response) => response.json())
   .then((data) => {
@@ -88,7 +87,7 @@ fetch("js/trainees.json")
     updateWeekSelector();
   });
 
-function displayStudents() {
+const displayStudents = () => {
   const studentList = document.getElementById("studentList");
   studentList.innerHTML = "";
   students.forEach((student) => {
@@ -105,7 +104,7 @@ function displayStudents() {
   });
 }
 
-function updateWeekSelector() {
+const updateWeekSelector = () => {
     const weekSelector = document.getElementById('weekNumber');
     weekSelector.innerHTML = '';
     for (let i = 0; i < weeks.length; i++) {
@@ -132,7 +131,7 @@ document.getElementById('weekNumber').addEventListener('change', (e) => {
     updateCharts();
 });
 
-function loadWeekData() {
+const loadWeekData = () => {
     const weekData = weeks[currentWeek];
     if (weekData) {
         const inputs = document.querySelectorAll('#studentList input');
@@ -148,7 +147,7 @@ function loadWeekData() {
     }
 }
 
-function rankStudents() {
+const rankStudents = () => {
   const inputs = document.querySelectorAll("#studentList input");
   const rankedStudents = [...students];
 
@@ -178,12 +177,12 @@ function rankStudents() {
 
 document.getElementById("rankStudents").addEventListener("click", rankStudents);
 
-function updateCharts() {
+const updateCharts = () => {
     updateWeeklyChart();
     updateStudentTrendCharts();
 }
 
-function updateWeeklyChart() {
+const updateWeeklyChart = () => {
   const chartContainer = document.getElementById("weeklyChart");
   chartContainer.innerHTML = "<canvas></canvas>";
   const ctx = chartContainer.querySelector("canvas").getContext("2d");
@@ -218,7 +217,7 @@ function updateWeeklyChart() {
   });
 }
 
-function updateTrendChart() {
+const updateTrendChart = () => {
   const chartContainer = document.getElementById("trendChart");
   chartContainer.innerHTML = "<canvas></canvas>";
   const ctx = chartContainer.querySelector("canvas").getContext("2d");
@@ -263,9 +262,9 @@ function updateTrendChart() {
   });
 }
 
-function updateStudentTrendCharts() {
+const updateStudentTrendCharts = () => {
   const chartsContainer = document.getElementById("studentTrendCharts");
-  chartsContainer.innerHTML = ""; // Clear previous charts
+  chartsContainer.innerHTML = ""; 
 
   students.forEach((student) => {
     const chartDiv = document.createElement("div");
@@ -326,7 +325,7 @@ function updateStudentTrendCharts() {
   });
 }
 
-function calculateAverageScores(weekData) {
+const calculateAverageScores = weekData => {
   const totalStudents = weekData.students.length;
   const quizSum = weekData.students.reduce(
     (sum, student) => sum + student.quiz,
