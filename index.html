@@ -18,10 +18,11 @@
             <div id="studentResults"></div>
           </div>
           <div class="file-upload">
-            <input type="file" id="csvFileInput" accept=".csv">
+            <input type="file" id="csvFileInput" accept=".csv" />
             <button id="uploadButton">Upload CSV</button>
-        </div>
+          </div>
         </section>
+
         <section class="bottom-section">
           <div class="left-panel">
             <h2>Student List</h2>
@@ -29,23 +30,30 @@
             <button id="rankStudents">Rank Students</button>
             <div id="rankedStudents"></div>
           </div>
-          
 
           <div class="right-panel">
             <h2>Performance Charts</h2>
             <div id="weekSelector">
-                <label for="weekNumber">Week:</label>
-                <select id="weekNumber"></select>
-                <button id="addWeek">Add Week</button>
+              <label for="weekNumber">Week:</label>
+              <select id="weekNumber"></select>
+              <button id="addWeek">Add Week</button>
             </div>
             <div id="weeklyChart" class="chart-container">
-                <canvas></canvas>
-                <button class="export-btn" data-chart="weekly">Export Weekly Chart</button>
+              <canvas></canvas>
+              <button class="export-btn" data-chart="weekly">
+                Export Weekly Chart
+              </button>
             </div>
             <div id="studentTrendCharts"></div>
-        </div>
-        
+          </div>
         </section>
+
+        <div id="studentDetailsModal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="studentDetailsContent"></div>
+          </div>
+        </div>
       </main>
     </div>
 
