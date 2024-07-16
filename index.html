@@ -29,6 +29,8 @@
             <button id="rankStudents">Rank Students</button>
             <div id="rankedStudents"></div>
           </div>
+          
+
           <div class="right-panel">
             <h2>Performance Charts</h2>
             <div id="weekSelector">
@@ -36,9 +38,13 @@
                 <select id="weekNumber"></select>
                 <button id="addWeek">Add Week</button>
             </div>
-            <div id="weeklyChart" class="chart-container"></div>
+            <div id="weeklyChart" class="chart-container">
+                <canvas></canvas>
+                <button class="export-btn" data-chart="weekly">Export Weekly Chart</button>
+            </div>
             <div id="studentTrendCharts"></div>
-          </div>
+        </div>
+        
         </section>
       </main>
     </div>

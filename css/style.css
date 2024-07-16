@@ -151,9 +151,17 @@ select {
     margin-right: 1rem;
 }
 
-#weeklyChart {
-    border: 1px solid #f9f9f9;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0);
+.export-btn {
+    display: block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.export-btn:hover {
+    background-color: #45a049;
 }
