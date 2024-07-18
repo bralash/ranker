@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // File Upload Handling
-function handleFileUpload() {
+const handleFileUpload = () => {
   const fileInput = document.getElementById("csvFileInput");
   const file = fileInput.files[0];
   if (file) {
@@ -32,7 +32,7 @@ function handleFileUpload() {
   }
 }
 
-function processCSV(csv) {
+const processCSV = (csv) => {
   const lines = csv.split("\n");
   const headers = lines[0].split(",");
 
@@ -83,7 +83,7 @@ function updateUI() {
   rankStudents();
 }
 
-function updateWeekSelector() {
+const updateWeekSelector = () => {
   const weekSelector = document.getElementById("weekNumber");
   weekSelector.innerHTML = "";
   for (let i = 0; i < weeks.length; i++) {
@@ -95,7 +95,7 @@ function updateWeekSelector() {
   weekSelector.value = currentWeek;
 }
 
-function displayStudents() {
+const displayStudents = () => {
   const studentList = document.getElementById("studentList");
   studentList.innerHTML = "";
   students.forEach((student) => {
@@ -121,7 +121,7 @@ function displayStudents() {
   });
 }
 
-function loadWeekData() {
+const loadWeekData = () => {
   const weekData = weeks[currentWeek];
   if (weekData) {
     students.forEach((student) => {
@@ -144,7 +144,7 @@ function loadWeekData() {
 }
 
 // Ranking
-function rankStudents() {
+const rankStudents = () => {
   const rankedStudents = students.map((student) => ({
     name: student.name,
     quiz: parseInt(document.getElementById(`${student.name}-quiz`).value) || 0,
@@ -177,7 +177,7 @@ function updateCharts() {
   setupExportButtons();
 }
 
-function updateWeeklyChart() {
+const updateWeeklyChart = () => {
   const chartContainer = document.getElementById("weeklyChart");
   chartContainer.innerHTML =
     '<canvas></canvas><button class="export-btn" data-chart="weekly">Export Weekly Chart</button>';
@@ -222,7 +222,7 @@ function updateWeeklyChart() {
   });
 }
 
-function updateStudentTrendCharts() {
+const updateStudentTrendCharts = () => {
   const chartsContainer = document.getElementById("studentTrendCharts");
   chartsContainer.innerHTML = "";
 
@@ -292,7 +292,7 @@ function updateStudentTrendCharts() {
 }
 
 // Chart Export
-function setupExportButtons() {
+const setupExportButtons = () => {
   document.querySelectorAll(".export-btn").forEach((button) => {
     button.addEventListener("click", function () {
       const chartId = this.dataset.chart;
@@ -319,13 +319,13 @@ function setupExportButtons() {
 }
 
 // Week Management
-function handleWeekChange(e) {
+const handleWeekChange = (e) => {
   currentWeek = parseInt(e.target.value);
   loadWeekData();
   updateCharts();
 }
 
-function addWeek() {
+const addWeek = () => {
   weeks.push({
     students: students.map((student) => ({
       name: student.name,
@@ -339,7 +339,7 @@ function addWeek() {
   updateCharts();
 }
 
-function createStudentDetailsPage(studentName) {
+const createStudentDetailsPage = (studentName) => {
   const student = students.find((s) => s.name === studentName);
   if (!student) return;
 
@@ -436,22 +436,16 @@ function createStudentDetailsPage(studentName) {
   document.getElementById("studentDetailsModal").style.display = "block";
 }
 
-function closeStudentDetailsModal() {
+const closeStudentDetailsModal = () => {
   document.getElementById("studentDetailsModal").style.display = "none";
 }
 
-// Add this to your existing displayStudents function
 
-// Add these event listeners when the DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
-  // ... (existing event listeners)
-
-  // Close the modal when clicking on <span> (x)
   document
     .querySelector(".close")
     .addEventListener("click", closeStudentDetailsModal);
 
-  // Close the modal when clicking outside of it
   window.addEventListener("click", function (event) {
     if (event.target == document.getElementById("studentDetailsModal")) {
       closeStudentDetailsModal();
