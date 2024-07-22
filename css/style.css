@@ -123,6 +123,7 @@ main {
   border-radius: 8px;
   padding: 1rem;
   flex: 1;
+  position: relative; /* to hold absolute children */
 }
 
 .right-panel {
@@ -133,6 +134,12 @@ main {
 #studentList,
 #rankedStudents {
   margin-bottom: 1rem;
+}
+
+#rankStudents {
+  position: absolute;
+  top: 33px;
+  right: 16px;
 }
 
 .student {
