@@ -131,6 +131,13 @@ main {
   flex-direction: column;
 }
 
+.right-panel h2, /* can be change to h3 */
+.left-panel h2 {
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: 600;
+}
+
 #studentList,
 #rankedStudents {
   margin-bottom: 1rem;
@@ -138,8 +145,14 @@ main {
 
 #rankStudents {
   position: absolute;
-  top: 33px;
+  top: 28px;
   right: 16px;
+}
+
+#rankedStudents h2 {
+  text-transform: none;
+  font-size: 18px;
+  font-weight: normal;
 }
 
 .student {
