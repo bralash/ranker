@@ -76,6 +76,12 @@ main {
   font-size: 14px;
 }
 
+.colloquiums h2 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .results {
   flex: 3;
   display: flex;
@@ -87,6 +93,20 @@ main {
   margin: 0;
   text-transform: uppercase;
   font-size: 1.8rem;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.amalitech_logo {
+  width: 20px;
+  height: 4px;
+  border-radius: 5px;
+  border: none;
+  background-color: orangered;
 }
 
 .bottom-section {
