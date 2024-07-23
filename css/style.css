@@ -70,6 +70,45 @@ main {
   flex: 1;
 }
 
+.colloquiums {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 14px;
+}
+
+.colloquiums h2 {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 300;
+}
+
+.results {
+  flex: 2;
+  display: flex;
+  align-items: center;
+}
+
+.results h2 {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 1.8rem;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.amalitech_logo {
+  width: 20px;
+  height: 4px;
+  border-radius: 5px;
+  border: none;
+  background-color: orangered;
+}
+
 .bottom-section {
   flex: 1;
   display: flex;
@@ -83,6 +122,7 @@ main {
   border-radius: 8px;
   padding: 1rem;
   flex: 1;
+  position: relative; /* to hold absolute children */
 }
 
 .right-panel {
@@ -90,9 +130,28 @@ main {
   flex-direction: column;
 }
 
+.right-panel h2, /* can be change to h3 */
+.left-panel h2 {
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: 600;
+}
+
 #studentList,
 #rankedStudents {
   margin-bottom: 1rem;
+}
+
+#rankStudents {
+  position: absolute;
+  top: 28px;
+  right: 16px;
+}
+
+#rankedStudents h2 {
+  text-transform: none;
+  font-size: 18px;
+  font-weight: normal;
 }
 
 .student {
