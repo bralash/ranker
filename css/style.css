@@ -204,6 +204,13 @@ select {
 
 .file-upload {
   margin-top: 1rem;
+  border: 2px dashed #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #1f2a3a;
+  color: #fff;
 }
 
 #csvFileInput {
@@ -260,3 +267,5 @@ select {
   text-decoration: none;
   cursor: pointer;
 }
+
+
