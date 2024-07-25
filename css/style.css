@@ -204,6 +204,13 @@ select {
 
 .file-upload {
   margin-top: 1rem;
+  border: 2px dashed #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #1f2a3a;
+  color: #fff;
 }
 
 #csvFileInput {
@@ -262,41 +269,3 @@ select {
 }
 
 
-.file-upload {
-  border: 2px dashed #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  text-align: center;
-  cursor: pointer;
-  background-color: #f8f9fa;
-  color: #333;
-}
-
-.file-upload-input {
-  display: none;
-}
-
-.file-upload-label {
-  display: block;
-  font-size: 14px;
-  color: #6c757d;
-}
-
-.file-upload-label::before {
-  content: 'Drag & drop or browse';
-}
-
-.file-upload:hover {
-  background-color: #e9ecef;
-}
-
-.file-upload-icon {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  background-image: url('path-to-your-icon.svg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  vertical-align: middle;
-  margin-right: 10px;
-}
