@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("uploadButton")
     .addEventListener("click", handleFileUpload);
   document
-    .getElementById("rankStudents")
+    .getElementById("rankStudentsBtn")
     .addEventListener("click", rankStudents);
   document
     .getElementById("weekNumber")
@@ -96,32 +96,26 @@ const updateWeekSelector = () => {
 };
 
 function displayStudents() {
-  const studentList = document.getElementById("studentList");
-  studentList.innerHTML = "";
-  students.forEach((student) => {
-    const studentDiv = document.createElement("div");
-    studentDiv.className = "student";
+  const traineeListContent = document.getElementById("traineeListContent");
+  traineeListContent.innerHTML = "";
 
-    const studentInfo = document.createElement("div");
-    studentInfo.className = "student-info";
+  students.forEach((student) => {
+    const traineeItem = document.createElement("div");
+    traineeItem.className = "trainee-item";
 
     const avatar = createAvatar(student.name);
-    studentInfo.appendChild(avatar);
 
-    const nameHeader = document.createElement("h3");
-    nameHeader.textContent = student.name;
-    studentInfo.appendChild(nameHeader);
-
-    studentDiv.appendChild(studentInfo);
-
-    studentDiv.innerHTML += `
-          <label for="${student.name}-quiz">Quiz:</label>
-          <input type="number" id="${student.name}-quiz" class="quiz" min="0" max="100" value="0">
-          <label for="${student.name}-lab">Lab:</label>
-          <input type="number" id="${student.name}-lab" class="lab" min="0" max="100" value="0">
+    traineeItem.innerHTML = `
+          <div class="trainee-name">
+              <div class="trainee-avatar" style="background-color: ${avatar.color}">${avatar.initials}</div>
+              ${student.name}
+          </div>
+          <input type="number" id="${student.name}-quiz" class="trainee-input quiz" min="0" max="100" value="0">
+          <input type="number" id="${student.name}-lab" class="trainee-input lab" min="0" max="100" value="0">
           <button class="view-details-btn" data-student="${student.name}">View Details</button>
       `;
-    studentList.appendChild(studentDiv);
+
+    traineeListContent.appendChild(traineeItem);
   });
 
   // Add event listeners for the "View Details" buttons
@@ -519,11 +513,12 @@ function getRandomColor() {
 }
 
 function createAvatar(name) {
-  const avatar = document.createElement("div");
-  avatar.className = "avatar";
-  avatar.textContent = getInitials(name);
-  avatar.style.backgroundColor = getRandomColor();
-  return avatar;
+  const initials = name
+    .split(" ")
+    .map((word) => word[0].toUpperCase())
+    .join("");
+  const color = getRandomColor();
+  return { initials, color };
 }
 
 function getRanking(studentName) {

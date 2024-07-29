@@ -34,10 +34,24 @@
 
         <section class="bottom-section">
           <div class="left-panel">
-            <h2>Trainee List</h2>
-            <div id="studentList"></div>
-            <button id="rankStudents">Rank Students</button>
-            <div id="rankedStudents"></div>
+            <div id="traineeSection" class="trainee-section">
+              <div class="trainee-header">
+                <h2>Trainees</h2>
+                <button id="rankStudentsBtn" class="rank-students-btn">
+                  Rank Students
+                </button>
+              </div>
+              <div id="traineeList" class="trainee-list">
+                <div class="trainee-list-header">
+                  <span>Name</span>
+                  <span>Quiz Score</span>
+                  <span>Lab Score</span>
+                  <span>Actions</span>
+                </div>
+                <div id="traineeListContent"></div>
+              </div>
+            </div>
+            <div id="rankedStudents" class="ranked-students-list"></div>
           </div>
 
           <div class="right-panel">
