@@ -7,13 +7,24 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("uploadButton")
     .addEventListener("click", handleFileUpload);
-  document
-    .getElementById("rankStudentsBtn")
-    .addEventListener("click", rankStudents);
+  document.getElementById("rankStudentsBtn").addEventListener("click", () => {
+    rankStudents();
+    updateDashboard();
+  });
   document
     .getElementById("weekNumber")
     .addEventListener("change", handleWeekChange);
-  // document.getElementById("addWeek").addEventListener("click", addWeek);
+
+  document
+    .querySelector(".close")
+    .addEventListener("click", closeStudentDetailsModal);
+
+  window.addEventListener("click", function (event) {
+    if (event.target == document.getElementById("studentDetailsModal")) {
+      closeStudentDetailsModal();
+    }
+  });
+  updateDashboard();
 });
 
 // File Upload Handling
@@ -382,7 +393,7 @@ function createStudentDetailsPage(studentName) {
   const averageQuiz = quizScores.reduce((a, b) => a + b, 0) / quizScores.length;
   const averageLab = labScores.reduce((a, b) => a + b, 0) / labScores.length;
   const totalAverage = (averageQuiz + averageLab) / 2;
-console.log(createAvatar(student.name))
+  console.log(createAvatar(student.name));
   const content = `
       <div class="student-header">
           <div class="trainee-avatar" style="background-color: ${createAvatar(student.name).color}">${createAvatar(student.name).initials}</div>
@@ -485,18 +496,6 @@ const closeStudentDetailsModal = () => {
   document.getElementById("studentDetailsModal").style.display = "none";
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  document
-    .querySelector(".close")
-    .addEventListener("click", closeStudentDetailsModal);
-
-  window.addEventListener("click", function (event) {
-    if (event.target == document.getElementById("studentDetailsModal")) {
-      closeStudentDetailsModal();
-    }
-  });
-});
-
 function getInitials(name) {
   return name
     .split(" ")
@@ -521,7 +520,6 @@ function createAvatar(name) {
   const color = getRandomColor();
   return { initials, color };
 }
-
 
 function getRanking(studentName) {
   const rankedStudents = [...students].sort((a, b) => {
@@ -579,4 +577,72 @@ function exportToImage(studentName) {
       exportButton.textContent = "Export as Image";
       exportButton.disabled = false;
     });
+}
+
+function analyzeStudentPerformance() {
+  const supportNeeded = [];
+  const threshold = 60; // Passing score threshold
+  const consistentLowPerformance = 3; // Number of consecutive low scores to flag
+
+  students.forEach((student) => {
+    const performances = weeks
+      .map((week) => {
+        const studentData = week.students.find((s) => s.name === student.name);
+        return studentData ? (studentData.quiz + studentData.lab) / 2 : null;
+      })
+      .filter((score) => score !== null);
+
+    if (performances.length > 0) {
+      const recentPerformances = performances.slice(-consistentLowPerformance);
+      const averageScore =
+        recentPerformances.reduce((sum, score) => sum + score, 0) /
+        recentPerformances.length;
+      const isDecreasing =
+        performances.length >= consistentLowPerformance &&
+        performances
+          .slice(-consistentLowPerformance)
+          .every(
+            (score, index, array) => index === 0 || score <= array[index - 1]
+          );
+
+      if (averageScore < threshold || isDecreasing) {
+        supportNeeded.push({
+          name: student.name,
+          averageScore: averageScore.toFixed(2),
+          trend: isDecreasing ? "Decreasing" : "Low",
+          lastScore: performances[performances.length - 1].toFixed(2),
+        });
+      }
+    }
+  });
+  return supportNeeded;
+}
+
+function updateSupportNeededList() {
+  const supportNeeded = analyzeStudentPerformance();
+  const supportNeededList = document.getElementById("supportNeededList");
+  supportNeededList.innerHTML = "";
+
+  if (supportNeeded.length === 0) {
+    supportNeededList.innerHTML =
+      "<p>No students currently need additional support.</p>";
+    return;
+  }
+
+  supportNeeded.forEach((student) => {
+    const studentItem = document.createElement("div");
+    studentItem.className = "support-needed-item";
+    studentItem.innerHTML = `
+          <span class="support-needed-name">${student.name}</span>
+          <span class="support-needed-score">Average: ${student.averageScore}</span>
+          <span class="support-needed-score">Last Score: ${student.lastScore}</span>
+          <span class="support-needed-trend trend-${student.trend.toLowerCase()}">${student.trend}</span>
+      `;
+    supportNeededList.appendChild(studentItem);
+  });
+}
+
+function updateDashboard() {
+  updateCharts();
+  updateSupportNeededList();
 }
