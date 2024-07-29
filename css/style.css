@@ -421,7 +421,8 @@ select {
   border-collapse: collapse;
 }
 
-.weekly-scores th, .weekly-scores td {
+.weekly-scores th,
+.weekly-scores td {
   text-align: left;
   padding: 10px;
   border-bottom: 1px solid #eee;
@@ -433,7 +434,7 @@ select {
 }
 
 .export-pdf {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -453,4 +454,25 @@ select {
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   grid-column: 1 / -1;
+}
+
+.capturing {
+  /* Ensure all content is visible for capture */
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.export-image {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.export-image:hover {
+  background-color: #45a049;
 }

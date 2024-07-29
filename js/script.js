@@ -441,7 +441,7 @@ function createStudentDetailsPage(studentName) {
               </table>
           </div>
       </div>
-      <button class="export-pdf" onclick="exportToPDF('${studentName}')">Export to PDF</button>
+      <button class="export-image" onclick="exportToImage('${studentName}')">Export as Image</button>
   `;
 
   document.getElementById("studentDetailsContent").innerHTML = content;
@@ -543,7 +543,43 @@ function getRanking(studentName) {
   );
 }
 
-function exportToPDF(studentName) {
+function exportToImage(studentName) {
   const element = document.getElementById("studentDetailsContent");
-  html2pdf().from(element).save(`${studentName}_performance.pdf`);
+  const exportButton = document.querySelector(".export-image");
+
+  // Show loading state
+  exportButton.textContent = "Generating Image...";
+  exportButton.disabled = true;
+
+  element.classList.add("capturing");
+
+  html2canvas(element, {
+    scale: 2,
+    logging: false,
+    useCORS: true,
+    backgroundColor: "#ffffff",
+  })
+    .then((canvas) => {
+      element.classList.remove("capturing");
+
+      const image = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "image/octet-stream");
+      const link = document.createElement("a");
+      link.download = `${studentName}_performance.png`;
+      link.href = image;
+      link.click();
+
+      // Reset button state
+      exportButton.textContent = "Export as Image";
+      exportButton.disabled = false;
+    })
+    .catch((error) => {
+      console.error("Error generating image:", error);
+      alert("There was an error generating the image. Please try again.");
+
+      // Reset button state
+      exportButton.textContent = "Export as Image";
+      exportButton.disabled = false;
+    });
 }
