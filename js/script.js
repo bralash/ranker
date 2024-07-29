@@ -156,7 +156,7 @@ const loadWeekData = () => {
 };
 
 // Ranking
-const rankStudents = () => {
+function rankStudents() {
   const rankedStudents = students.map((student) => ({
     name: student.name,
     quiz: parseInt(document.getElementById(`${student.name}-quiz`).value) || 0,
@@ -172,15 +172,36 @@ const rankStudents = () => {
 
   const rankedList = document.getElementById("rankedStudents");
   rankedList.innerHTML = "<h2>Ranked Students</h2>";
+
   rankedStudents.forEach((student, index) => {
+    const priority =
+      student.total >= 160 ? "high" : student.total >= 120 ? "medium" : "low";
+    const priorityText = priority.charAt(0).toUpperCase() + priority.slice(1);
+
     rankedList.innerHTML += `
-            <p>${index + 1}. ${student.name}: Quiz - ${student.quiz}, Lab - ${student.lab}, Total - ${student.total}</p>
-        `;
+          <div class="student-row">
+              <div class="rank">${index + 1}</div>
+              <div class="avatar" style="background-color: ${getRandomColor()}">${getInitials(student.name)}</div>
+              <div class="student-name">${student.name}</div>
+              <div class="score">
+                  <span class="score-label">Quiz</span>
+                  <span class="score-value">${student.quiz}</span>
+              </div>
+              <div class="score">
+                  <span class="score-label">Lab</span>
+                  <span class="score-value">${student.lab}</span>
+              </div>
+              <div class="total-score">${student.total}</div>
+              <div class="priority">
+                  <span class="priority-indicator priority-${priority}">${priorityText}</span>
+              </div>
+          </div>
+      `;
   });
 
   weeks[currentWeek] = { students: rankedStudents };
   updateCharts();
-};
+}
 
 // Chart Updates
 function updateCharts() {
@@ -351,7 +372,7 @@ const addWeek = () => {
   updateCharts();
 };
 
-const createStudentDetailsPage = (studentName) => {
+function createStudentDetailsPage(studentName) {
   const student = students.find((s) => s.name === studentName);
   if (!student) return;
 
@@ -365,49 +386,63 @@ const createStudentDetailsPage = (studentName) => {
 
   const averageQuiz = quizScores.reduce((a, b) => a + b, 0) / quizScores.length;
   const averageLab = labScores.reduce((a, b) => a + b, 0) / labScores.length;
-
-  const strengths = [];
-  const areasForImprovement = [];
-
-  if (averageQuiz > averageLab) {
-    strengths.push("Quiz performance");
-    areasForImprovement.push("Lab performance");
-  } else if (averageLab > averageQuiz) {
-    strengths.push("Lab performance");
-    areasForImprovement.push("Quiz performance");
-  }
-
-  if (quizScores[quizScores.length - 1] > averageQuiz) {
-    strengths.push("Recent quiz improvement");
-  } else {
-    areasForImprovement.push("Recent quiz performance");
-  }
-
-  if (labScores[labScores.length - 1] > averageLab) {
-    strengths.push("Recent lab improvement");
-  } else {
-    areasForImprovement.push("Recent lab performance");
-  }
+  const totalAverage = (averageQuiz + averageLab) / 2;
 
   const content = `
-        <div class="student-info">
-            ${createAvatar(student.name).outerHTML}
-            <h2>${student.name}'s Performance Details</h2>
-        </div>
-        <h3>Performance History</h3>
-        <canvas id="studentDetailChart"></canvas>
-        <h3>Overall Statistics</h3>
-        <p>Average Quiz Score: ${averageQuiz.toFixed(2)}</p>
-        <p>Average Lab Score: ${averageLab.toFixed(2)}</p>
-        <h3>Strengths</h3>
-        <ul>
-            ${strengths.map((strength) => `<li>${strength}</li>`).join("")}
-        </ul>
-        <h3>Areas for Improvement</h3>
-        <ul>
-            ${areasForImprovement.map((area) => `<li>${area}</li>`).join("")}
-        </ul>
-    `;
+      <div class="student-header">
+          ${createAvatar(student.name).outerHTML}
+          <h2>${student.name}'s Performance Details</h2>
+      </div>
+      <div class="student-details">
+          <div class="stats-card">
+              <h3>Average Quiz Score</h3>
+              <div class="stats-value">${averageQuiz.toFixed(1)}%</div>
+          </div>
+          <div class="stats-card">
+              <h3>Average Lab Score</h3>
+              <div class="stats-value">${averageLab.toFixed(1)}%</div>
+          </div>
+          <div class="stats-card">
+              <h3>Total Average</h3>
+              <div class="stats-value">${totalAverage.toFixed(1)}%</div>
+          </div>
+          <div class="stats-card">
+              <h3>Ranking</h3>
+              <div class="stats-value">#${getRanking(studentName)}</div>
+          </div>
+          <div class="chart-detail-container">
+              <canvas id="studentDetailChart"></canvas>
+          </div>
+          <div class="weekly-scores">
+              <h3>Weekly Scores</h3>
+              <table>
+                  <thead>
+                      <tr>
+                          <th>Week</th>
+                          <th>Average Quiz Score</th>
+                          <th>Average Lab Score</th>
+                          <th>Total</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      ${studentData
+                        .map(
+                          (data, index) => `
+                          <tr>
+                              <td>Week ${index}</td>
+                              <td>${data.quiz}</td>
+                              <td>${data.lab}</td>
+                              <td>${data.quiz + data.lab}</td>
+                          </tr>
+                      `
+                        )
+                        .join("")}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      <button class="export-pdf" onclick="exportToPDF('${studentName}')">Export to PDF</button>
+  `;
 
   document.getElementById("studentDetailsContent").innerHTML = content;
 
@@ -449,7 +484,7 @@ const createStudentDetailsPage = (studentName) => {
   });
 
   document.getElementById("studentDetailsModal").style.display = "block";
-};
+}
 
 const closeStudentDetailsModal = () => {
   document.getElementById("studentDetailsModal").style.display = "none";
@@ -489,4 +524,26 @@ function createAvatar(name) {
   avatar.textContent = getInitials(name);
   avatar.style.backgroundColor = getRandomColor();
   return avatar;
+}
+
+function getRanking(studentName) {
+  const rankedStudents = [...students].sort((a, b) => {
+    const aTotal = weeks.reduce((sum, week) => {
+      const student = week.students.find((s) => s.name === a.name);
+      return sum + (student ? student.quiz + student.lab : 0);
+    }, 0);
+    const bTotal = weeks.reduce((sum, week) => {
+      const student = week.students.find((s) => s.name === b.name);
+      return sum + (student ? student.quiz + student.lab : 0);
+    }, 0);
+    return bTotal - aTotal;
+  });
+  return (
+    rankedStudents.findIndex((student) => student.name === studentName) + 1
+  );
+}
+
+function exportToPDF(studentName) {
+  const element = document.getElementById("studentDetailsContent");
+  html2pdf().from(element).save(`${studentName}_performance.pdf`);
 }
