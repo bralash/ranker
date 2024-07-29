@@ -393,7 +393,7 @@ function createStudentDetailsPage(studentName) {
   const averageQuiz = quizScores.reduce((a, b) => a + b, 0) / quizScores.length;
   const averageLab = labScores.reduce((a, b) => a + b, 0) / labScores.length;
   const totalAverage = (averageQuiz + averageLab) / 2;
-  console.log(createAvatar(student.name));
+  
   const content = `
       <div class="student-header">
           <div class="trainee-avatar" style="background-color: ${createAvatar(student.name).color}">${createAvatar(student.name).initials}</div>
