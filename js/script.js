@@ -646,3 +646,5 @@ function updateDashboard() {
   updateCharts();
   updateSupportNeededList();
 }
+
+
