@@ -30,7 +30,7 @@ const handleFileUpload = () => {
   } else {
     alert("Please select a CSV file to upload.");
   }
-}
+};
 
 const processCSV = (csv) => {
   const lines = csv.split("\n");
@@ -72,7 +72,7 @@ const processCSV = (csv) => {
 
   currentWeek = weeks.length - 1;
   updateUI();
-}
+};
 
 // UI Updates
 function updateUI() {
@@ -93,16 +93,28 @@ const updateWeekSelector = () => {
     weekSelector.appendChild(option);
   }
   weekSelector.value = currentWeek;
-}
+};
 
-const displayStudents = () => {
+function displayStudents() {
   const studentList = document.getElementById("studentList");
   studentList.innerHTML = "";
   students.forEach((student) => {
     const studentDiv = document.createElement("div");
     studentDiv.className = "student";
-    studentDiv.innerHTML = `
-          <h3>${student.name}</h3>
+
+    const studentInfo = document.createElement("div");
+    studentInfo.className = "student-info";
+
+    const avatar = createAvatar(student.name);
+    studentInfo.appendChild(avatar);
+
+    const nameHeader = document.createElement("h3");
+    nameHeader.textContent = student.name;
+    studentInfo.appendChild(nameHeader);
+
+    studentDiv.appendChild(studentInfo);
+
+    studentDiv.innerHTML += `
           <label for="${student.name}-quiz">Quiz:</label>
           <input type="number" id="${student.name}-quiz" class="quiz" min="0" max="100" value="0">
           <label for="${student.name}-lab">Lab:</label>
@@ -112,7 +124,7 @@ const displayStudents = () => {
     studentList.appendChild(studentDiv);
   });
 
-  // Add event listeners for the new "View Details" buttons
+  // Add event listeners for the "View Details" buttons
   document.querySelectorAll(".view-details-btn").forEach((button) => {
     button.addEventListener("click", function () {
       const studentName = this.dataset.student;
@@ -141,7 +153,7 @@ const loadWeekData = () => {
       document.getElementById(`${student.name}-lab`).value = 0;
     });
   }
-}
+};
 
 // Ranking
 const rankStudents = () => {
@@ -168,7 +180,7 @@ const rankStudents = () => {
 
   weeks[currentWeek] = { students: rankedStudents };
   updateCharts();
-}
+};
 
 // Chart Updates
 function updateCharts() {
@@ -220,7 +232,7 @@ const updateWeeklyChart = () => {
       },
     },
   });
-}
+};
 
 const updateStudentTrendCharts = () => {
   const chartsContainer = document.getElementById("studentTrendCharts");
@@ -289,7 +301,7 @@ const updateStudentTrendCharts = () => {
       },
     });
   });
-}
+};
 
 // Chart Export
 const setupExportButtons = () => {
@@ -316,14 +328,14 @@ const setupExportButtons = () => {
       document.body.removeChild(tmpLink);
     });
   });
-}
+};
 
 // Week Management
 const handleWeekChange = (e) => {
   currentWeek = parseInt(e.target.value);
   loadWeekData();
   updateCharts();
-}
+};
 
 const addWeek = () => {
   weeks.push({
@@ -337,7 +349,7 @@ const addWeek = () => {
   updateWeekSelector();
   loadWeekData();
   updateCharts();
-}
+};
 
 const createStudentDetailsPage = (studentName) => {
   const student = students.find((s) => s.name === studentName);
@@ -378,21 +390,24 @@ const createStudentDetailsPage = (studentName) => {
   }
 
   const content = `
-      <h2>${student.name}'s Performance Details</h2>
-      <h3>Performance History</h3>
-      <canvas id="studentDetailChart"></canvas>
-      <h3>Overall Statistics</h3>
-      <p>Average Quiz Score: ${averageQuiz.toFixed(2)}</p>
-      <p>Average Lab Score: ${averageLab.toFixed(2)}</p>
-      <h3>Strengths</h3>
-      <ul>
-          ${strengths.map((strength) => `<li>${strength}</li>`).join("")}
-      </ul>
-      <h3>Areas for Improvement</h3>
-      <ul>
-          ${areasForImprovement.map((area) => `<li>${area}</li>`).join("")}
-      </ul>
-  `;
+        <div class="student-info">
+            ${createAvatar(student.name).outerHTML}
+            <h2>${student.name}'s Performance Details</h2>
+        </div>
+        <h3>Performance History</h3>
+        <canvas id="studentDetailChart"></canvas>
+        <h3>Overall Statistics</h3>
+        <p>Average Quiz Score: ${averageQuiz.toFixed(2)}</p>
+        <p>Average Lab Score: ${averageLab.toFixed(2)}</p>
+        <h3>Strengths</h3>
+        <ul>
+            ${strengths.map((strength) => `<li>${strength}</li>`).join("")}
+        </ul>
+        <h3>Areas for Improvement</h3>
+        <ul>
+            ${areasForImprovement.map((area) => `<li>${area}</li>`).join("")}
+        </ul>
+    `;
 
   document.getElementById("studentDetailsContent").innerHTML = content;
 
@@ -434,12 +449,11 @@ const createStudentDetailsPage = (studentName) => {
   });
 
   document.getElementById("studentDetailsModal").style.display = "block";
-}
+};
 
 const closeStudentDetailsModal = () => {
   document.getElementById("studentDetailsModal").style.display = "none";
-}
-
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   document
@@ -452,3 +466,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+function getInitials(name) {
+  return name
+    .split(" ")
+    .map((word) => word[0].toUpperCase())
+    .join("");
+}
+
+function getRandomColor() {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+function createAvatar(name) {
+  const avatar = document.createElement("div");
+  avatar.className = "avatar";
+  avatar.textContent = getInitials(name);
+  avatar.style.backgroundColor = getRandomColor();
+  return avatar;
+}
