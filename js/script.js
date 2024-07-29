@@ -625,7 +625,7 @@ function updateSupportNeededList() {
 
   if (supportNeeded.length === 0) {
     supportNeededList.innerHTML =
-      "<p>No students currently need additional support.</p>";
+      "<p>No trainees currently need additional support.</p>";
     return;
   }
 
