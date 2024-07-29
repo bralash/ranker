@@ -424,7 +424,7 @@ select {
 
 .weekly-scores th,
 .weekly-scores td {
-  text-align: left;
+  text-align: center;
   padding: 10px;
   border-bottom: 1px solid #eee;
 }
