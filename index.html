@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trainee Performance Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
@@ -38,7 +39,7 @@
               <div class="trainee-header">
                 <h2>Trainees</h2>
                 <button id="rankStudentsBtn" class="rank-students-btn">
-                  Rank Students
+                  <i class="fas fa-sort-amount-down"></i> Rank Students
                 </button>
               </div>
               <div id="traineeList" class="trainee-list">
@@ -59,13 +60,13 @@
             <div id="weekSelector">
               <label for="weekNumber">Week:</label>
               <select id="weekNumber"></select>
-              <button id="addWeek">Add Week</button>
+              <!-- <button id="addWeek">Add Week</button> -->
             </div>
             <div id="weeklyChart" class="chart-container">
               <canvas></canvas>
-              <button class="export-btn" data-chart="weekly">
+              <!-- <button class="export-btn" data-chart="weekly">
                 Export Weekly Chart
-              </button>
+              </button> -->
             </div>
             <div id="studentTrendCharts"></div>
           </div>

@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("weekNumber")
     .addEventListener("change", handleWeekChange);
-  document.getElementById("addWeek").addEventListener("click", addWeek);
+  // document.getElementById("addWeek").addEventListener("click", addWeek);
 });
 
 // File Upload Handling
@@ -207,7 +207,7 @@ function updateCharts() {
 const updateWeeklyChart = () => {
   const chartContainer = document.getElementById("weeklyChart");
   chartContainer.innerHTML =
-    '<canvas></canvas><button class="export-btn" data-chart="weekly">Export Weekly Chart</button>';
+    '<canvas></canvas><button class="export-btn" data-chart="weekly" title="Export Weekly Chart"><i class="fas fa-file-export"></i></button>';
   const canvas = chartContainer.querySelector("canvas");
   const ctx = canvas.getContext("2d");
 
@@ -263,7 +263,8 @@ const updateStudentTrendCharts = () => {
 
     const exportBtn = document.createElement("button");
     exportBtn.className = "export-btn";
-    exportBtn.textContent = `Export ${student.name}'s Chart`;
+    exportBtn.title = `Export ${student.name} Chart`;
+    exportBtn.innerHTML = `<i class="fas fa-file-export"></i>`;
     exportBtn.dataset.chart = `student-${index}`;
     chartDiv.appendChild(exportBtn);
 
@@ -381,10 +382,10 @@ function createStudentDetailsPage(studentName) {
   const averageQuiz = quizScores.reduce((a, b) => a + b, 0) / quizScores.length;
   const averageLab = labScores.reduce((a, b) => a + b, 0) / labScores.length;
   const totalAverage = (averageQuiz + averageLab) / 2;
-
+console.log(createAvatar(student.name))
   const content = `
       <div class="student-header">
-          ${createAvatar(student.name).outerHTML}
+          <div class="trainee-avatar" style="background-color: ${createAvatar(student.name).color}">${createAvatar(student.name).initials}</div>
           <h2>${student.name}'s Performance Details</h2>
       </div>
       <div class="student-details">
@@ -520,6 +521,7 @@ function createAvatar(name) {
   const color = getRandomColor();
   return { initials, color };
 }
+
 
 function getRanking(studentName) {
   const rankedStudents = [...students].sort((a, b) => {
