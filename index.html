@@ -12,38 +12,52 @@
   </head>
   <body>
     <div class="dashboard">
-      <main>
-        <section class="top-section">
-          <div class="colloquiums">
-            <!-- <h2>AmaliTech</h2> -->
-            <h2>
-              AmaliT
-              <span class="logo">
-                <div class="amalitech_logo"></div>
-                <div class="amalitech_logo"></div>
-                <div class="amalitech_logo"></div>
-              </span>
-              ch
-            </h2>
-          </div>
-          <div class="results">
-            <h2>Trainee Performance Tracker</h2>
-            <div id="studentResults"></div>
-          </div>
-          <div class="file-upload">
-            <input type="file" id="csvFileInput" accept=".csv" />
-            <button id="uploadButton">Upload CSV</button>
-          </div>
-        </section>
+      <header>
+        <div class="colloquiums">
+          <h2>
+            AmaliT
+            <span class="logo">
+              <span class="amalitech_logo"></span>
+              <span class="amalitech_logo"></span>
+              <span class="amalitech_logo"></span>
+            </span>
+          </h2>
+        </div>
+        <div class="results">
+          <h2>Trainee Performance Tracker</h2>
+        </div>
+        <div class="file-upload">
+          <input
+            type="file"
+            id="csvFileInput"
+            accept=".csv"
+            style="display: none"
+          />
+          <label for="csvFileInput" class="upload-label">Choose CSV</label>
+          <button id="uploadButton" class="upload-button">Upload CSV</button>
+        </div>
+      </header>
 
-        <section class="bottom-section">
+      <main>
+        <div class="bottom-section">
           <div class="left-panel">
-            <div id="traineeSection" class="trainee-section">
+            <section id="traineeSection" class="trainee-section">
               <div class="trainee-header">
                 <h2>Trainees</h2>
                 <button id="rankStudentsBtn" class="rank-students-btn">
                   <i class="fas fa-sort-amount-down"></i> Rank Trainees
                 </button>
+              </div>
+              <div id="weekSelector" class="week-selector">
+                <div class="section-selector">
+                  <h3>Foundation</h3>
+                  <select id="foundationWeekNumber"></select>
+                </div>
+                <div class="section-selector">
+                  <h3>Advanced</h3>
+                  <select id="advancedWeekNumber"></select>
+                </div>
+                <!-- <button id="addWeek" class="add-week-btn">Add Week</button> -->
               </div>
               <div id="traineeList" class="trainee-list">
                 <div class="trainee-list-header">
@@ -52,40 +66,40 @@
                   <span>Lab Score</span>
                   <span>Actions</span>
                 </div>
-                <div id="traineeListContent"></div>
+                <div id="traineeListContent">
+                  <div class="section-header">Foundation</div>
+                  <div id="foundationTrainees"></div>
+                  <div class="section-header">Advanced</div>
+                  <div id="advancedTrainees"></div>
+                </div>
               </div>
-            </div>
-            <div id="rankedStudents" class="ranked-students-list"></div>
-            <div id="supportNeededSection" class="support-needed-section">
+            </section>
+
+            <section id="rankedStudents" class="ranked-students-list"></section>
+
+            <section id="supportNeededSection" class="support-needed-section">
               <h3>Trainees Needing Support</h3>
               <div id="supportNeededList"></div>
-            </div>
+            </section>
           </div>
 
           <div class="right-panel">
             <h2>Performance Charts</h2>
-            <div id="weekSelector">
-              <label for="weekNumber">Week:</label>
-              <select id="weekNumber"></select>
-              <!-- <button id="addWeek">Add Week</button> -->
-            </div>
             <div class="chart-box">
-              <div id="weeklyChart" class="chart-container">
-                <canvas></canvas>
-              </div>
+              <div id="foundationWeeklyChart" class="chart-container"></div>
+              <div id="advancedWeeklyChart" class="chart-container"></div>
             </div>
-
             <div id="studentTrendCharts"></div>
-          </div>
-        </section>
-
-        <div id="studentDetailsModal" class="modal">
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <div id="studentDetailsContent"></div>
           </div>
         </div>
       </main>
+    </div>
+
+    <div id="studentDetailsModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="studentDetailsContent"></div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
