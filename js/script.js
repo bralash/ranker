@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .querySelector(".close")
     .addEventListener("click", closeStudentDetailsModal);
 
-  window.addEventListener("click", function (event) {
+  window.addEventListener("click",  event => {
     if (event.target == document.getElementById("studentDetailsModal")) {
       closeStudentDetailsModal();
     }
@@ -33,7 +33,7 @@ const handleFileUpload = () => {
   const file = fileInput.files[0];
   if (file) {
     const reader = new FileReader();
-    reader.onload = function (e) {
+    reader.onload = e => {
       const csv = e.target.result;
       processCSV(csv);
     };
@@ -86,7 +86,7 @@ const processCSV = (csv) => {
 };
 
 // UI Updates
-function updateUI() {
+const updateUI = () => {
   updateWeekSelector();
   displayStudents();
   loadWeekData();
@@ -106,7 +106,7 @@ const updateWeekSelector = () => {
   weekSelector.value = currentWeek;
 };
 
-function displayStudents() {
+const displayStudents = () => {
   const traineeListContent = document.getElementById("traineeListContent");
   traineeListContent.innerHTML = "";
 
@@ -131,7 +131,7 @@ function displayStudents() {
 
   // Add event listeners for the "View Details" buttons
   document.querySelectorAll(".view-details-btn").forEach((button) => {
-    button.addEventListener("click", function () {
+    button.addEventListener("click", () => {
       const studentName = this.dataset.student;
       createStudentDetailsPage(studentName);
     });
@@ -161,7 +161,7 @@ const loadWeekData = () => {
 };
 
 // Ranking
-function rankStudents() {
+const rankStudents = () => {
   const rankedStudents = students.map((student) => ({
     name: student.name,
     quiz: parseInt(document.getElementById(`${student.name}-quiz`).value) || 0,
@@ -209,7 +209,7 @@ function rankStudents() {
 }
 
 // Chart Updates
-function updateCharts() {
+const updateCharts = () => {
   updateWeeklyChart();
   updateStudentTrendCharts();
   setupExportButtons();
@@ -333,7 +333,7 @@ const updateStudentTrendCharts = () => {
 // Chart Export
 const setupExportButtons = () => {
   document.querySelectorAll(".export-btn").forEach((button) => {
-    button.addEventListener("click", function () {
+    button.addEventListener("click", () => {
       const chartId = this.dataset.chart;
       let canvas;
       if (chartId === "weekly") {
@@ -378,7 +378,7 @@ const addWeek = () => {
   updateCharts();
 };
 
-function createStudentDetailsPage(studentName) {
+const createStudentDetailsPage = studentName =>{
   const student = students.find((s) => s.name === studentName);
   if (!student) return;
 
@@ -496,14 +496,14 @@ const closeStudentDetailsModal = () => {
   document.getElementById("studentDetailsModal").style.display = "none";
 };
 
-function getInitials(name) {
+const getInitials = name =>{
   return name
     .split(" ")
     .map((word) => word[0].toUpperCase())
     .join("");
 }
 
-function getRandomColor() {
+const getRandomColor = () => {
   const letters = "0123456789ABCDEF";
   let color = "#";
   for (let i = 0; i < 6; i++) {
@@ -512,7 +512,7 @@ function getRandomColor() {
   return color;
 }
 
-function createAvatar(name) {
+const createAvatar = name => {
   const initials = name
     .split(" ")
     .map((word) => word[0].toUpperCase())
@@ -521,7 +521,7 @@ function createAvatar(name) {
   return { initials, color };
 }
 
-function getRanking(studentName) {
+const getRanking = studentName => {
   const rankedStudents = [...students].sort((a, b) => {
     const aTotal = weeks.reduce((sum, week) => {
       const student = week.students.find((s) => s.name === a.name);
@@ -538,7 +538,7 @@ function getRanking(studentName) {
   );
 }
 
-function exportToImage(studentName) {
+const exportToImage = studentName =>{
   const element = document.getElementById("studentDetailsContent");
   const exportButton = document.querySelector(".export-image");
 
@@ -579,7 +579,7 @@ function exportToImage(studentName) {
     });
 }
 
-function analyzeStudentPerformance() {
+const analyzeStudentPerformance = () => {
   const supportNeeded = [];
   const threshold = 60; // Passing score threshold
   const consistentLowPerformance = 3; // Number of consecutive low scores to flag
@@ -618,7 +618,7 @@ function analyzeStudentPerformance() {
   return supportNeeded;
 }
 
-function updateSupportNeededList() {
+const updateSupportNeededList = () => {
   const supportNeeded = analyzeStudentPerformance();
   const supportNeededList = document.getElementById("supportNeededList");
   supportNeededList.innerHTML = "";
@@ -642,7 +642,7 @@ function updateSupportNeededList() {
   });
 }
 
-function updateDashboard() {
+const updateDashboard = () => {
   updateCharts();
   updateSupportNeededList();
 }
