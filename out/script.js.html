@@ -1,4 +1,32 @@
-// Trainee Dashboard Documentation
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: script.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: script.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Trainee Dashboard Documentation
 
 /**
  * Global Variables
@@ -84,7 +112,7 @@ const processCSV = (csv) => {
   students = [];
   weeks = [];
 
-  for (let i = 1; i < lines.length; i++) {
+  for (let i = 1; i &lt; lines.length; i++) {
     const currentLine = lines[i].split(",");
     if (currentLine.length === headers.length) {
       const [studentName, weekNumber, quizScore, labScore] = currentLine;
@@ -93,7 +121,7 @@ const processCSV = (csv) => {
         students.push({ name: studentName });
       }
 
-      while (weeks.length <= parseInt(weekNumber)) {
+      while (weeks.length &lt;= parseInt(weekNumber)) {
         weeks.push({ students: [] });
       }
 
@@ -145,7 +173,7 @@ const updateUI = () => {
 const updateWeekSelector = () => {
   const weekSelector = document.getElementById("weekNumber");
   weekSelector.innerHTML = "";
-  for (let i = 0; i < weeks.length; i++) {
+  for (let i = 0; i &lt; weeks.length; i++) {
     const option = document.createElement("option");
     option.value = i;
     option.textContent = `Week ${i}`;
@@ -170,13 +198,13 @@ const displayStudents = () => {
     const avatar = createAvatar(student.name);
 
     traineeItem.innerHTML = `
-          <div class="trainee-name">
-              <div class="trainee-avatar" style="background-color: ${avatar.color}">${avatar.initials}</div>
+          &lt;div class="trainee-name">
+              &lt;div class="trainee-avatar" style="background-color: ${avatar.color}">${avatar.initials}&lt;/div>
               ${student.name}
-          </div>
-          <input type="number" id="${student.name}-quiz" class="trainee-input quiz" min="0" max="100" value="0">
-          <input type="number" id="${student.name}-lab" class="trainee-input lab" min="0" max="100" value="0">
-          <button class="view-details-btn" data-student="${student.name}">View Details</button>
+          &lt;/div>
+          &lt;input type="number" id="${student.name}-quiz" class="trainee-input quiz" min="0" max="100" value="0">
+          &lt;input type="number" id="${student.name}-lab" class="trainee-input lab" min="0" max="100" value="0">
+          &lt;button class="view-details-btn" data-student="${student.name}">View Details&lt;/button>
       `;
 
     traineeListContent.appendChild(traineeItem);
@@ -244,7 +272,7 @@ const rankStudents = () => {
   rankedStudents.sort((a, b) => b.total - a.total);
 
   const rankedList = document.getElementById("rankedStudents");
-  rankedList.innerHTML = "<h2>Ranked Students</h2>";
+  rankedList.innerHTML = "&lt;h2>Ranked Students&lt;/h2>";
 
   rankedStudents.forEach((student, index) => {
     const priority =
@@ -252,23 +280,23 @@ const rankStudents = () => {
     const priorityText = priority.charAt(0).toUpperCase() + priority.slice(1);
 
     rankedList.innerHTML += `
-          <div class="student-row">
-              <div class="rank">${index + 1}</div>
-              <div class="avatar" style="background-color: ${getRandomColor()}">${getInitials(student.name)}</div>
-              <div class="student-name">${student.name}</div>
-              <div class="score">
-                  <span class="score-label">Quiz</span>
-                  <span class="score-value">${student.quiz}</span>
-              </div>
-              <div class="score">
-                  <span class="score-label">Lab</span>
-                  <span class="score-value">${student.lab}</span>
-              </div>
-              <div class="total-score">${student.total}</div>
-              <div class="priority">
-                  <span class="priority-indicator priority-${priority}">${priorityText}</span>
-              </div>
-          </div>
+          &lt;div class="student-row">
+              &lt;div class="rank">${index + 1}&lt;/div>
+              &lt;div class="avatar" style="background-color: ${getRandomColor()}">${getInitials(student.name)}&lt;/div>
+              &lt;div class="student-name">${student.name}&lt;/div>
+              &lt;div class="score">
+                  &lt;span class="score-label">Quiz&lt;/span>
+                  &lt;span class="score-value">${student.quiz}&lt;/span>
+              &lt;/div>
+              &lt;div class="score">
+                  &lt;span class="score-label">Lab&lt;/span>
+                  &lt;span class="score-value">${student.lab}&lt;/span>
+              &lt;/div>
+              &lt;div class="total-score">${student.total}&lt;/div>
+              &lt;div class="priority">
+                  &lt;span class="priority-indicator priority-${priority}">${priorityText}&lt;/span>
+              &lt;/div>
+          &lt;/div>
       `;
   });
 
@@ -301,7 +329,7 @@ const updateCharts = () => {
 const updateWeeklyChart = () => {
   const chartContainer = document.getElementById("weeklyChart");
   chartContainer.innerHTML =
-    '<canvas></canvas><button class="export-btn" data-chart="weekly" title="Export Weekly Chart"><i class="fas fa-file-export"></i></button>';
+    '&lt;canvas>&lt;/canvas>&lt;button class="export-btn" data-chart="weekly" title="Export Weekly Chart">&lt;i class="fas fa-file-export">&lt;/i>&lt;/button>';
   const canvas = chartContainer.querySelector("canvas");
   const ctx = canvas.getContext("2d");
 
@@ -364,7 +392,7 @@ const updateStudentTrendCharts = () => {
     const exportBtn = document.createElement("button");
     exportBtn.className = "export-btn";
     exportBtn.title = `Export ${student.name} Chart`;
-    exportBtn.innerHTML = `<i class="fas fa-file-export"></i>`;
+    exportBtn.innerHTML = `&lt;i class="fas fa-file-export">&lt;/i>`;
     exportBtn.dataset.chart = `student-${index}`;
     chartDiv.appendChild(exportBtn);
 
@@ -521,59 +549,59 @@ const createStudentDetailsPage = studentName =>{
   const totalAverage = (averageQuiz + averageLab) / 2;
   
   const content = `
-      <div class="student-header">
-          <div class="trainee-avatar" style="background-color: ${createAvatar(student.name).color}">${createAvatar(student.name).initials}</div>
-          <h2>${student.name}'s Performance Details</h2>
-      </div>
-      <div class="student-details">
-          <div class="stats-card">
-              <h3>Average Quiz Score</h3>
-              <div class="stats-value">${averageQuiz.toFixed(1)}%</div>
-          </div>
-          <div class="stats-card">
-              <h3>Average Lab Score</h3>
-              <div class="stats-value">${averageLab.toFixed(1)}%</div>
-          </div>
-          <div class="stats-card">
-              <h3>Total Average</h3>
-              <div class="stats-value">${totalAverage.toFixed(1)}%</div>
-          </div>
-          <div class="stats-card">
-              <h3>Ranking</h3>
-              <div class="stats-value">#${getRanking(studentName)}</div>
-          </div>
-          <div class="chart-detail-container">
-              <canvas id="studentDetailChart"></canvas>
-          </div>
-          <div class="weekly-scores">
-              <h3>Weekly Scores</h3>
-              <table>
-                  <thead>
-                      <tr>
-                          <th>Week</th>
-                          <th>Average Quiz Score</th>
-                          <th>Average Lab Score</th>
-                          <th>Total</th>
-                      </tr>
-                  </thead>
-                  <tbody>
+      &lt;div class="student-header">
+          &lt;div class="trainee-avatar" style="background-color: ${createAvatar(student.name).color}">${createAvatar(student.name).initials}&lt;/div>
+          &lt;h2>${student.name}'s Performance Details&lt;/h2>
+      &lt;/div>
+      &lt;div class="student-details">
+          &lt;div class="stats-card">
+              &lt;h3>Average Quiz Score&lt;/h3>
+              &lt;div class="stats-value">${averageQuiz.toFixed(1)}%&lt;/div>
+          &lt;/div>
+          &lt;div class="stats-card">
+              &lt;h3>Average Lab Score&lt;/h3>
+              &lt;div class="stats-value">${averageLab.toFixed(1)}%&lt;/div>
+          &lt;/div>
+          &lt;div class="stats-card">
+              &lt;h3>Total Average&lt;/h3>
+              &lt;div class="stats-value">${totalAverage.toFixed(1)}%&lt;/div>
+          &lt;/div>
+          &lt;div class="stats-card">
+              &lt;h3>Ranking&lt;/h3>
+              &lt;div class="stats-value">#${getRanking(studentName)}&lt;/div>
+          &lt;/div>
+          &lt;div class="chart-detail-container">
+              &lt;canvas id="studentDetailChart">&lt;/canvas>
+          &lt;/div>
+          &lt;div class="weekly-scores">
+              &lt;h3>Weekly Scores&lt;/h3>
+              &lt;table>
+                  &lt;thead>
+                      &lt;tr>
+                          &lt;th>Week&lt;/th>
+                          &lt;th>Average Quiz Score&lt;/th>
+                          &lt;th>Average Lab Score&lt;/th>
+                          &lt;th>Total&lt;/th>
+                      &lt;/tr>
+                  &lt;/thead>
+                  &lt;tbody>
                       ${studentData
                         .map(
                           (data, index) => `
-                          <tr>
-                              <td>Week ${index}</td>
-                              <td>${data.quiz}</td>
-                              <td>${data.lab}</td>
-                              <td>${data.quiz + data.lab}</td>
-                          </tr>
+                          &lt;tr>
+                              &lt;td>Week ${index}&lt;/td>
+                              &lt;td>${data.quiz}&lt;/td>
+                              &lt;td>${data.lab}&lt;/td>
+                              &lt;td>${data.quiz + data.lab}&lt;/td>
+                          &lt;/tr>
                       `
                         )
                         .join("")}
-                  </tbody>
-              </table>
-          </div>
-      </div>
-      <button class="export-image" onclick="exportToImage('${studentName}')">Export as Image</button>
+                  &lt;/tbody>
+              &lt;/table>
+          &lt;/div>
+      &lt;/div>
+      &lt;button class="export-image" onclick="exportToImage('${studentName}')">Export as Image&lt;/button>
   `;
 
   document.getElementById("studentDetailsContent").innerHTML = content;
@@ -653,7 +681,7 @@ const getInitials = name =>{
 const getRandomColor = () => {
   const letters = "0123456789ABCDEF";
   let color = "#";
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i &lt; 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
@@ -774,14 +802,14 @@ const analyzeStudentPerformance = () => {
         recentPerformances.reduce((sum, score) => sum + score, 0) /
         recentPerformances.length;
       const isDecreasing =
-        performances.length >= consistentLowPerformance &&
+        performances.length >= consistentLowPerformance &amp;&amp;
         performances
           .slice(-consistentLowPerformance)
           .every(
-            (score, index, array) => index === 0 || score <= array[index - 1]
+            (score, index, array) => index === 0 || score &lt;= array[index - 1]
           );
 
-      if (averageScore < threshold || isDecreasing) {
+      if (averageScore &lt; threshold || isDecreasing) {
         supportNeeded.push({
           name: student.name,
           averageScore: averageScore.toFixed(2),
@@ -806,7 +834,7 @@ const updateSupportNeededList = () => {
 
   if (supportNeeded.length === 0) {
     supportNeededList.innerHTML =
-      "<p>No trainees currently need additional support.</p>";
+      "&lt;p>No trainees currently need additional support.&lt;/p>";
     return;
   }
 
@@ -814,10 +842,10 @@ const updateSupportNeededList = () => {
     const studentItem = document.createElement("div");
     studentItem.className = "support-needed-item";
     studentItem.innerHTML = `
-          <span class="support-needed-name">${student.name}</span>
-          <span class="support-needed-score">Average: ${student.averageScore}</span>
-          <span class="support-needed-score">Last Score: ${student.lastScore}</span>
-          <span class="support-needed-trend trend-${student.trend.toLowerCase()}">${student.trend}</span>
+          &lt;span class="support-needed-name">${student.name}&lt;/span>
+          &lt;span class="support-needed-score">Average: ${student.averageScore}&lt;/span>
+          &lt;span class="support-needed-score">Last Score: ${student.lastScore}&lt;/span>
+          &lt;span class="support-needed-trend trend-${student.trend.toLowerCase()}">${student.trend}&lt;/span>
       `;
     supportNeededList.appendChild(studentItem);
   });
@@ -835,3 +863,26 @@ const updateDashboard = () => {
 }
 
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addWeek">addWeek</a></li><li><a href="global.html#analyzeStudentPerformance">analyzeStudentPerformance</a></li><li><a href="global.html#closeStudentDetailsModal">closeStudentDetailsModal</a></li><li><a href="global.html#createAvatar">createAvatar</a></li><li><a href="global.html#createStudentDetailsPage">createStudentDetailsPage</a></li><li><a href="global.html#displayStudents">displayStudents</a></li><li><a href="global.html#exportToImage">exportToImage</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getRanking">getRanking</a></li><li><a href="global.html#handleFileUpload">handleFileUpload</a></li><li><a href="global.html#handleWeekChange">handleWeekChange</a></li><li><a href="global.html#loadWeekData">loadWeekData</a></li><li><a href="global.html#processCSV">processCSV</a></li><li><a href="global.html#rankStudents">rankStudents</a></li><li><a href="global.html#setupExportButtons">setupExportButtons</a></li><li><a href="global.html#students">students</a></li><li><a href="global.html#updateCharts">updateCharts</a></li><li><a href="global.html#updateDashboard">updateDashboard</a></li><li><a href="global.html#updateStudentTrendCharts">updateStudentTrendCharts</a></li><li><a href="global.html#updateSupportNeededList">updateSupportNeededList</a></li><li><a href="global.html#updateUI">updateUI</a></li><li><a href="global.html#updateWeekSelector">updateWeekSelector</a></li><li><a href="global.html#updateWeeklyChart">updateWeeklyChart</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Wed Aug 14 2024 17:22:45 GMT+0000 (Greenwich Mean Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
