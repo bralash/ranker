@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
  * It reads the selected CSV file and passes its content to processCSV().
  */
 
-const handleFileUpload = () => {
+export const handleFileUpload = () => {
   const fileInput = document.getElementById("csvFileInput");
   const file = fileInput.files[0];
   if (file) {
@@ -77,7 +77,7 @@ const handleFileUpload = () => {
  * Parses the CSV content and populates the students and weeks arrays.
  * It also updates the UI after processing the data.
  */
-const processCSV = (csv) => {
+export const processCSV = (csv) => {
   const lines = csv.split("\n");
   const headers = lines[0].split(",");
 
@@ -129,7 +129,7 @@ const processCSV = (csv) => {
  * updateUI()
  * Calls various functions to update different parts of the UI.
  */
-const updateUI = () => {
+export const updateUI = () => {
   updateWeekSelector();
   displayStudents();
   loadWeekData();
@@ -142,7 +142,7 @@ const updateUI = () => {
  * updateWeekSelector()
  * Updates the week selector dropdown with available weeks.
  */
-const updateWeekSelector = () => {
+export const updateWeekSelector = () => {
   const weekSelector = document.getElementById("weekNumber");
   weekSelector.innerHTML = "";
   for (let i = 0; i < weeks.length; i++) {
@@ -159,7 +159,7 @@ const updateWeekSelector = () => {
  * displayStudents()
  * Displays the list of students with input fields for quiz and lab scores.
  */
-const displayStudents = () => {
+export const displayStudents = () => {
   const traineeListContent = document.getElementById("traineeListContent");
   traineeListContent.innerHTML = "";
 
@@ -196,7 +196,7 @@ const displayStudents = () => {
  * loadWeekData()
  * Loads and displays the data for the current week.
  */
-const loadWeekData = () => {
+export const loadWeekData = () => {
   const weekData = weeks[currentWeek];
   if (weekData) {
     students.forEach((student) => {
@@ -229,7 +229,7 @@ const loadWeekData = () => {
  * rankStudents()
  * Calculates and displays the ranking of students based on their total scores.
  */
-const rankStudents = () => {
+export const rankStudents = () => {
   const rankedStudents = students.map((student) => ({
     name: student.name,
     quiz: parseInt(document.getElementById(`${student.name}-quiz`).value) || 0,
@@ -287,7 +287,7 @@ const rankStudents = () => {
  * updateCharts()
  * Updates all charts in the dashboard.
  */
-const updateCharts = () => {
+export const updateCharts = () => {
   updateWeeklyChart();
   updateStudentTrendCharts();
   setupExportButtons();
@@ -298,7 +298,7 @@ const updateCharts = () => {
  * updateWeeklyChart()
  * Creates and updates the bar chart showing weekly performance for all students.
  */
-const updateWeeklyChart = () => {
+export const updateWeeklyChart = () => {
   const chartContainer = document.getElementById("weeklyChart");
   chartContainer.innerHTML =
     '<canvas></canvas><button class="export-btn" data-chart="weekly" title="Export Weekly Chart"><i class="fas fa-file-export"></i></button>';
@@ -349,7 +349,7 @@ const updateWeeklyChart = () => {
  * updateStudentTrendCharts()
  * Creates and updates line charts showing performance trends for each student.
  */
-const updateStudentTrendCharts = () => {
+export const updateStudentTrendCharts = () => {
   const chartsContainer = document.getElementById("studentTrendCharts");
   chartsContainer.innerHTML = "";
 
@@ -430,7 +430,7 @@ const updateStudentTrendCharts = () => {
  * setupExportButtons()
  * Sets up event listeners for chart export buttons.
  */
-const setupExportButtons = () => {
+export const setupExportButtons = () => {
   document.querySelectorAll(".export-btn").forEach((button) => {
     button.addEventListener("click", () => {
       const chartId = this.dataset.chart;
@@ -468,7 +468,7 @@ const setupExportButtons = () => {
  * @param {Event} e - The week change event
  * Handles the change of selected week and updates the UI accordingly.
  */
-const handleWeekChange = (e) => {
+export const handleWeekChange = (e) => {
   currentWeek = parseInt(e.target.value);
   loadWeekData();
   updateCharts();
@@ -479,7 +479,7 @@ const handleWeekChange = (e) => {
  * addWeek()
  * Adds a new week to the weeks array and updates the UI.
  */
-const addWeek = () => {
+export const addWeek = () => {
   weeks.push({
     students: students.map((student) => ({
       name: student.name,
@@ -504,7 +504,7 @@ const addWeek = () => {
  * @param {string} studentName - The name of the student
  * Creates and displays a detailed page for a specific student.
  */
-const createStudentDetailsPage = studentName =>{
+export const createStudentDetailsPage = studentName =>{
   const student = students.find((s) => s.name === studentName);
   if (!student) return;
 
@@ -623,7 +623,7 @@ const createStudentDetailsPage = studentName =>{
  * closeStudentDetailsModal()
  * Closes the student details modal.
  */
-const closeStudentDetailsModal = () => {
+export const closeStudentDetailsModal = () => {
   document.getElementById("studentDetailsModal").style.display = "none";
 };
 
@@ -638,7 +638,7 @@ const closeStudentDetailsModal = () => {
  * @param {string} name - The full name of a student
  * @returns {string} The initials of the student
  */
-const getInitials = name =>{
+export const getInitials = name =>{
   return name
     .split(" ")
     .map((word) => word[0].toUpperCase())
@@ -650,7 +650,7 @@ const getInitials = name =>{
  * getRandomColor()
  * @returns {string} A random color in hexadecimal format
  */
-const getRandomColor = () => {
+export const getRandomColor = () => {
   const letters = "0123456789ABCDEF";
   let color = "#";
   for (let i = 0; i < 6; i++) {
@@ -665,7 +665,7 @@ const getRandomColor = () => {
  * @param {string} name - The name of the student
  * @returns {Object} An object containing initials and color for the avatar
  */
-const createAvatar = name => {
+export const createAvatar = name => {
   const initials = name
     .split(" ")
     .map((word) => word[0].toUpperCase())
@@ -680,7 +680,7 @@ const createAvatar = name => {
  * @param {string} studentName - The name of the student
  * @returns {number} The ranking of the student
  */
-const getRanking = studentName => {
+export const getRanking = studentName => {
   const rankedStudents = [...students].sort((a, b) => {
     const aTotal = weeks.reduce((sum, week) => {
       const student = week.students.find((s) => s.name === a.name);
@@ -703,7 +703,7 @@ const getRanking = studentName => {
  * @param {string} studentName - The name of the student
  * Exports the student details page as an image.
  */
-const exportToImage = studentName =>{
+export const exportToImage = studentName =>{
   const element = document.getElementById("studentDetailsContent");
   const exportButton = document.querySelector(".export-image");
 
@@ -755,51 +755,48 @@ const exportToImage = studentName =>{
  * @returns {Array} An array of students needing support
  * Analyzes student performance to identify those who need additional support.
  */
-const analyzeStudentPerformance = () => {
-  const supportNeeded = [];
-  const threshold = 60; // Passing score threshold
-  const consistentLowPerformance = 3; // Number of consecutive low scores to flag
-
-  students.forEach((student) => {
-    const performances = weeks
-      .map((week) => {
-        const studentData = week.students.find((s) => s.name === student.name);
-        return studentData ? (studentData.quiz + studentData.lab) / 2 : null;
-      })
-      .filter((score) => score !== null);
-
-    if (performances.length > 0) {
-      const recentPerformances = performances.slice(-consistentLowPerformance);
-      const averageScore =
-        recentPerformances.reduce((sum, score) => sum + score, 0) /
-        recentPerformances.length;
-      const isDecreasing =
-        performances.length >= consistentLowPerformance &&
-        performances
-          .slice(-consistentLowPerformance)
-          .every(
+export const analyzeStudentPerformance = () => {
+    const supportNeeded = [];
+    const threshold = 60; // Passing score threshold
+    const consistentLowPerformance = 2; // Number of consecutive low scores to flag
+  
+    students.forEach((student) => {
+      const performances = weeks
+        .map((week) => {
+          const studentData = week.students.find((s) => s.name === student.name);
+          return studentData ? (studentData.quiz + studentData.lab) : null;
+        })
+        .filter((score) => score !== null);
+  
+      if (performances.length >= consistentLowPerformance) {
+        const recentPerformances = performances.slice(-consistentLowPerformance);
+        const averageScore =
+          recentPerformances.reduce((sum, score) => sum + score, 0) /
+          recentPerformances.length;
+        const isDecreasing =
+          recentPerformances.every(
             (score, index, array) => index === 0 || score <= array[index - 1]
           );
-
-      if (averageScore < threshold || isDecreasing) {
-        supportNeeded.push({
-          name: student.name,
-          averageScore: averageScore.toFixed(2),
-          trend: isDecreasing ? "Decreasing" : "Low",
-          lastScore: performances[performances.length - 1].toFixed(2),
-        });
+  
+        if (averageScore < threshold && isDecreasing) {
+          supportNeeded.push({
+            name: student.name,
+            averageScore: (averageScore / 2).toFixed(2), // Divide by 2 to get the average of quiz and lab
+            trend: "Decreasing",
+            lastScore: (performances[performances.length - 1] / 2).toFixed(2), // Divide by 2 to get the average of quiz and lab
+          });
+        }
       }
-    }
-  });
-  return supportNeeded;
-}
+    });
+    return supportNeeded;
+  };
 
 
 /**
  * updateSupportNeededList()
  * Updates the list of students needing additional support.
  */
-const updateSupportNeededList = () => {
+export const updateSupportNeededList = () => {
   const supportNeeded = analyzeStudentPerformance();
   const supportNeededList = document.getElementById("supportNeededList");
   supportNeededList.innerHTML = "";
@@ -829,7 +826,7 @@ const updateSupportNeededList = () => {
  * updateDashboard()
  * Updates the entire dashboard, including charts and support needed list.
  */
-const updateDashboard = () => {
+export const updateDashboard = () => {
   updateCharts();
   updateSupportNeededList();
 }
